@@ -14,17 +14,18 @@ bucket = cluster.bucket('travel-sample') # get a reference to the travel-sample 
 coll = bucket.default_collection() # get a reference to the default collection
 
 # CRUD operations
-# Create: upsert a document into travel-sample bucket
+# Create: upsert documents(sample data in data.py) into travel-sample bucket
 def upsert_document(doc):
   print("\nUpsert")
   try:
-    # key will equal: "airline_8091"
+    # key will equal: "airline_XXXX"
     key = doc["type"] + "_" + str(doc["id"])
     result = coll.upsert(key, doc)
     print("CAS: ", result.cas) # The CAS is a value representing the current state of an item
   except Exception as e:
     print(e)
 
+print("Create:")
 for airline in data.airlines:
   upsert_document(airline)
 
@@ -38,15 +39,23 @@ def get_airline_by_key(key):
   except Exception as e:
     print(e)
 
+print("\nRetrieve:")
 get_airline_by_key("airline_8091")
 
-# Query with N1QL
-print("\nQuery with N1QL:")
-query_result = cluster.query('SELECT * FROM `travel-sample` WHERE name=$1', "Couchbase Airways")
+# Query with N1QL named parameter
+print("\nQuery with N1QL named parameter:")
+query_result = cluster.query('SELECT * FROM `travel-sample` WHERE callsign=$callsign', callsign='DYNASTY')
+for row in query_result:
+  print(row)
+
+# Query with N1QL positional parameter 
+print("\nQuery with N1QL positional parameter:")
+query_result = cluster.query('SELECT * FROM `travel-sample` WHERE name=$1', 'Eva Air')
 for row in query_result:
   print(row)
 
 # Update: update an existing doc
+print("\nUpdate:")
 airline = data.airlines[0]
 airline["alliance"] = "Star Alliance"
 upsert_document(airline)
@@ -61,9 +70,5 @@ def delete_airline_by_key(key):
   else:
     print("warning: cannot remove doc id:", key)
   
-
+print("\nDelete:")
 delete_airline_by_key("airline_8091") 
-
-
-for airline in data.airlines:
-  upsert_document(airline)
