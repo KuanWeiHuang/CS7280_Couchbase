@@ -11,7 +11,7 @@ Couchbase Server, originally known as Membase, is an open-source, distributed, J
 
 ### Configurations
 1. Setup New Cluster, configure it as following:
-![Configurations](/images/configurations.png)
+![Configurations](/images/cluster-configuration.png)
 2. Go to "Buckets" tab on the side bar and click "ADD BUCKET" in the top right corner. Configure the bucket as following:
 ![Bucket Configurations](/images/bucket-configuration.png)
 3. Go to the "Query" tab on the side bar and create primary index for "travel-sample" bucket. (In order to use N1QL, we have to create primary index)
