@@ -46,7 +46,10 @@ Data Bucket: a logical container of uniquely keyed documents. Logically related 
 ### References
 
 https://docs.couchbase.com/python-sdk/3.0/hello-world/start-using-sdk.html
+
 https://docs.couchbase.com/python-sdk/3.0/concept-docs/documents.html
+
 https://www.youtube.com/watch?v=cyN_Az0110E&t=7s
+
 https://docs.couchbase.com/python-sdk/current/hello-world/start-using-sdk.html
 
